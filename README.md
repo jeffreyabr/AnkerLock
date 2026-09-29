@@ -1,4 +1,4 @@
-# Bud Lock
+# AnkerLock
 
 One-tap Quick Settings tile that disables touch controls on the Soundcore V30i
 by sending `08ee00000001010a0002` over Bluetooth Classic RFCOMM channel 6.
