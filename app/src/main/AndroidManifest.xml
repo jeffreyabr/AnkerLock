@@ -6,7 +6,7 @@
     <application
         android:label="Bud Lock"
         android:icon="@drawable/ic_lock"
-        android:theme="@android:style/Theme.Material.DayNight">
+        android:theme="@android:style/Theme.DeviceDefault.DayNight">
 
         <activity
             android:name=".MainActivity"
