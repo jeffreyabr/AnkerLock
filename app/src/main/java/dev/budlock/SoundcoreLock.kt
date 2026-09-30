@@ -44,7 +44,6 @@ object SoundcoreLock {
         check(adapter.isEnabled) { "Bluetooth is off" }
         val dev = adapter.getRemoteDevice(MAC)
         check(dev.bondState == BluetoothDevice.BOND_BONDED) { "Earbuds not paired" }
-        adapter.cancelDiscovery()
         return dev
     }
 
