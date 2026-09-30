@@ -3,8 +3,10 @@ package dev.budlock
 import android.Manifest
 import android.app.Activity
 import android.os.Bundle
+import android.view.WindowInsets
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 
 class MainActivity : Activity() {
@@ -13,21 +15,43 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        actionBar?.hide()
         val pad = (24 * resources.displayMetrics.density).toInt()
 
-        status = TextView(this).apply { textSize = 16f; setTextIsSelectable(true) }
+        status = TextView(this).apply {
+            textSize = 16f
+            setTextIsSelectable(true)
+            setPadding(0, pad / 2, 0, 0)
+        }
         val lockBtn = Button(this).apply { text = "Send lock now" }
         val uuidBtn = Button(this).apply { text = "Show device UUIDs" }
 
-        setContentView(LinearLayout(this).apply {
+        val content = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(pad, pad * 2, pad, pad)
+            setPadding(pad, pad, pad, pad)
             addView(TextView(this@MainActivity).apply {
-                text = "Bud Lock\n\nAdd the \"Bud Lock\" tile from your Quick Settings edit panel. " +
+                text = "Bud Lock"
+                textSize = 28f
+                setPadding(0, 0, 0, pad / 2)
+            })
+            addView(TextView(this@MainActivity).apply {
+                text = "Add the \"Bud Lock\" tile from your Quick Settings edit panel. " +
                        "This screen is only needed once to grant permission, and for testing."
                 textSize = 16f
+                setPadding(0, 0, 0, pad / 2)
             })
-            addView(lockBtn); addView(uuidBtn); addView(status)
+            addView(lockBtn)
+            addView(uuidBtn)
+            addView(status)
+        }
+
+        setContentView(ScrollView(this).apply {
+            addView(content)
+            setOnApplyWindowInsetsListener { v, insets ->
+                val bars = insets.getInsets(WindowInsets.Type.systemBars())
+                v.setPadding(0, bars.top, 0, bars.bottom)
+                insets
+            }
         })
 
         lockBtn.setOnClickListener {
